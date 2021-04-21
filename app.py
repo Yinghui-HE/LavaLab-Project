@@ -4,6 +4,7 @@ from venv.api.HelloApiHandler import HelloApiHandler
 from flask_cors import CORS #comment this on deployment
 import mysql.connector
 import os
+import json
 
 # connect to mysql database
 host = os.environ.get('MYSQL_HOST')
@@ -36,3 +37,14 @@ def login():
         else:
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
+
+@app.route('/loginform', methods=['POST'])
+def loginform():
+    print(request)
+    form_result = request.data
+    dict = json.loads(form_result)
+    print(dict)
+
+if __name__ == '__main__':
+    app.run(debug=True)
