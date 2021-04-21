@@ -1,0 +1,36 @@
+DROP DATABASE IF EXISTS AlDenteDB;
+CREATE DATABASE AlDenteDB;
+USE AlDenteDB;
+
+CREATE TABLE UserProfile (
+	UserID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    UserName VARCHAR(30) NOT NULL, 
+    UserPassword VARCHAR(30) NOT NULL, 
+    PicURL VARCHAR(1000) NOT NULL,
+    Location VARCHAR(30),
+    RestaurantListID VARCHAR(255)
+); 
+
+CREATE TABLE Followers (
+	Followship INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT NOT NULL, 
+    FollowerID INT NOT NULL, 
+	FOREIGN KEY fk1 (UserID) REFERENCES UserProfile(UserID),
+    FOREIGN KEY fk2 (FollowerID) REFERENCES UserProfile(UserID)
+); 
+
+CREATE TABLE Restaurant (
+	RestaurantID INT PRIMARY KEY AUTO_INCREMENT,
+	rName VARCHAR(100) NOT NULL,
+    rLongitude FLOAT NOT NULL, 
+    rLatitude FLOAT NOT NULL, 
+    rRating FLOAT(2,1) NOT NULL,
+    rPicURL VARCHAR(1000) NOT NULL
+);
+
+CREATE TABLE UserRestaurantList (
+	UserID INT PRIMARY KEY,
+	RestaurantID INT,
+    FOREIGN KEY fk1 (UserID) REFERENCES UserProfile(UserID),
+    FOREIGN KEY fk2 (RestaurantID) REFERENCES Restaurant(RestaurantID)
+);

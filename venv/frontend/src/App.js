@@ -46,10 +46,6 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>React + Flask Tutorial</p>
-        <div>{getMessage.status === 200 ?
-          <h3>{getMessage.data.message}</h3>
-          :
-          <h3>LOADING</h3>}</div>
       </header>
     </div>
   );
