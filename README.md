@@ -1,8 +1,8 @@
 # al dente
 
-Run backend: $ ```flask run```
+Run backend: $ ```flask run```, run in folder *al-dente*
 
-Run frontend: $ ```npm start```
+Run frontend: $ ```npm start```, run in folder *frontend*
 
 Setup environment variables:
 ```
