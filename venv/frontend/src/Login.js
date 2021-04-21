@@ -68,7 +68,7 @@ function Login() {
            // ..code to submit form to backend here...
 
             axios({
-              url: '/loginform',
+              url: '/login_form',
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -79,8 +79,8 @@ function Login() {
                 password: password
               }
             })
-//            .then(response => {/* handle the response */})
-//            .catch(error => console.error('timeout exceeded'))
+            .then(response => {console.log(response)})
+            .catch(error => console.error('timeout exceeded'))
         }
 
         return (

@@ -1,6 +1,7 @@
 from flask import Flask, send_from_directory, render_template, redirect, url_for, request
 from flask_restful import Api, Resource, reqparse
 from venv.api.HelloApiHandler import HelloApiHandler
+from venv.api.LoginApiHandler import LoginApiHandler
 from flask_cors import CORS #comment this on deployment
 import mysql.connector
 import os
@@ -27,24 +28,25 @@ def serve(path):
 api.add_resource(HelloApiHandler, '/flask/hello')
 
 
-# Route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
+# # Route for handling the login page logic
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     error = None
+#     if request.method == 'POST':
+#         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+#             error = 'Invalid Credentials. Please try again.'
+#         else:
+#             return redirect(url_for('home'))
+#     return render_template('login.html', error=error)
 
 
-@app.route('/loginform', methods=['POST'])
-def loginform():
-    print(request)
-    form_result = request.data
-    dict = json.loads(form_result)
-    print(dict)
+# @app.route('/loginform', methods=['POST'])
+# def loginform():
+#     print(request)
+#     form_result = request.data
+#     dict = json.loads(form_result)
+#     print(dict)
+api.add_resource(LoginApiHandler, '/login_form')
 
 if __name__ == '__main__':
     app.run(debug=True)

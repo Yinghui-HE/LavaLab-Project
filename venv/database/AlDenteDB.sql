@@ -4,8 +4,8 @@ USE AlDenteDB;
 
 CREATE TABLE UserProfile (
 	UserID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    UserName VARCHAR(30) NOT NULL, 
-    UserPassword VARCHAR(30) NOT NULL, 
+    Email VARCHAR(30) NOT NULL, 
+    Password VARCHAR(30) NOT NULL, 
     PicURL VARCHAR(1000) NOT NULL,
     Location VARCHAR(30),
     RestaurantListID VARCHAR(255)
@@ -24,7 +24,7 @@ CREATE TABLE Restaurant (
 	rName VARCHAR(100) NOT NULL,
     rLongitude FLOAT NOT NULL, 
     rLatitude FLOAT NOT NULL, 
-    rRating FLOAT(2,1) NOT NULL,
+    rRating FLOAT NOT NULL,
     rPicURL VARCHAR(1000) NOT NULL
 );
 
