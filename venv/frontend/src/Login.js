@@ -56,11 +56,11 @@ const styles = theme => ({
 function Login() {
 
 //        const { classes } = this.props;
-//        const {classes} = this.props;
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
-
-
+        const [isLoggedIn, setIsLoggedIn] = useState(false);
+        // eslint-disable-next-line
+        const [userID, setUserID] = useState(0);
 
         function handleSubmit(event) {
             console.log( 'Email:', email, 'Password: ', password);
@@ -79,7 +79,15 @@ function Login() {
                 password: password
               }
             })
-            .then(response => {console.log(response)})
+            .then(response => {
+                console.log(response);
+                if (response.data.status === "Success") {
+                    console.log("userID: ", response.data.userID);
+
+                    setIsLoggedIn(isLoggedIn);
+                    setUserID(response.data.userID);
+                }
+            })
             .catch(error => console.error('timeout exceeded'))
         }
 

@@ -26,26 +26,6 @@ def serve(path):
 
 
 api.add_resource(HelloApiHandler, '/flask/hello')
-
-
-# # Route for handling the login page logic
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     error = None
-#     if request.method == 'POST':
-#         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-#             error = 'Invalid Credentials. Please try again.'
-#         else:
-#             return redirect(url_for('home'))
-#     return render_template('login.html', error=error)
-
-
-# @app.route('/loginform', methods=['POST'])
-# def loginform():
-#     print(request)
-#     form_result = request.data
-#     dict = json.loads(form_result)
-#     print(dict)
 api.add_resource(LoginApiHandler, '/login_form')
 
 if __name__ == '__main__':
