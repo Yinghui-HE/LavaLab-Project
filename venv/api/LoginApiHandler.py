@@ -2,6 +2,7 @@ from flask_restful import Api, Resource, reqparse
 import mysql.connector
 import os
 
+
 class LoginApiHandler(Resource):
 
     def get(self):
@@ -61,11 +62,11 @@ class LoginApiHandler(Resource):
                     user_id = row[0]
                     print(row)
 
-        if ret_msg:
-            message = "Your Message Requested: {}".format(ret_msg)
-        else:
-            message = "No Msg"
+        # if ret_msg:
+        #     message = "Your Message Requested: {}".format(ret_msg)
+        # else:
+        #     message = "No Msg"
 
-        final_ret = {"status": ret_status, "message": message, "userID": user_id}
+        final_ret = {"status": ret_status, "message": ret_msg, "userID": user_id}
 
         return final_ret

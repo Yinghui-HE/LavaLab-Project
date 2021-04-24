@@ -43,6 +43,10 @@ import { withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from 
 import { Face, Fingerprint } from '@material-ui/icons'
 import axios from 'axios'
 import './Login.css';
+import { Route, BrowserRouter } from 'react-router-dom';
+import Profile from "./Profile";
+//import { browserHistory } from 'react-router'
+
 
 const styles = theme => ({
     margin: {
@@ -53,7 +57,7 @@ const styles = theme => ({
     },
 });
 
-function Login() {
+function Login(props) {
 
 //        const { classes } = this.props;
         const [email, setEmail] = useState('');
@@ -61,7 +65,8 @@ function Login() {
         const [isLoggedIn, setIsLoggedIn] = useState(false);
         // eslint-disable-next-line
         const [userID, setUserID] = useState(0);
-
+        const [redirect, setRedirect] = useState(false);
+//        const navigate = useNavigate();
         function handleSubmit(event) {
             console.log( 'Email:', email, 'Password: ', password);
            // You should see email and password in console.
@@ -86,60 +91,73 @@ function Login() {
 
                     setIsLoggedIn(isLoggedIn);
                     setUserID(response.data.userID);
+//                    console.log("props: ", props)
+//                    props.userID = userID;
+                    setRedirect(true);
+//                    navigate("/profile")
                 }
             })
             .catch(error => console.error('timeout exceeded'))
         }
 
         return (
-            <div className="login-wrapper">
-            <form id="form" noValidate autoComplete="off">
-                <div className="text-field">
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item>
-                            <Face />
+            redirect ?
+            (
+                <BrowserRouter>
+                    <Route path = '/profile'
+                        render = {props => <Profile {...props} data={userID} />} />
+                </BrowserRouter>
+            ) :
+            (
+                <div className="login-wrapper">
+                <form id="form" noValidate autoComplete="off">
+                    <div className="text-field">
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <Face />
+                            </Grid>
+                            <Grid item md={true} sm={true} xs={true}>
+                                <TextField id="username" label="Username" type="email"
+                                    onInput={ e=>setEmail(e.target.value)} fullWidth autoFocus required />
+                            </Grid>
                         </Grid>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="username" label="Username" type="email"
-                                onInput={ e=>setEmail(e.target.value)} fullWidth autoFocus required />
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <Fingerprint />
+                            </Grid>
+                            <Grid item md={true} sm={true} xs={true}>
+                                <TextField id="password" label="Password" type="password"
+                                    onInput={ e=>setPassword(e.target.value)} fullWidth required />
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <Grid container alignItems="center" justify="space-between">
+                        <Grid item>
+                            <FormControlLabel control={
+                                <Checkbox
+                                    color="primary"
+                                />
+                            } label="Remember me" />
+                        </Grid>
+                        <Grid item>
+                            <Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Forgot password ?</Button>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item>
-                            <Fingerprint />
-                        </Grid>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="password" label="Password" type="password"
-                                onInput={ e=>setPassword(e.target.value)} fullWidth required />
-                        </Grid>
+                    <Grid container justify="center" style={{ marginTop: '10px' }}>
+                        <Button
+                            variant="outlined" color="primary" style={{ textTransform: "none", marginRight: '5%' }}
+                            onClick={() => { handleSubmit() }} >
+                          Login
+                        </Button>
+                        <Button
+                            variant="outlined" color="primary" style={{ textTransform: "none" }}
+                            onClick={() => { alert('clicked') }}>
+                          Register
+                        </Button>
                     </Grid>
+                </form>
                 </div>
-                <Grid container alignItems="center" justify="space-between">
-                    <Grid item>
-                        <FormControlLabel control={
-                            <Checkbox
-                                color="primary"
-                            />
-                        } label="Remember me" />
-                    </Grid>
-                    <Grid item>
-                        <Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="primary">Forgot password ?</Button>
-                    </Grid>
-                </Grid>
-                <Grid container justify="center" style={{ marginTop: '10px' }}>
-                    <Button
-                        variant="outlined" color="primary" style={{ textTransform: "none", marginRight: '5%' }}
-                        onClick={() => { handleSubmit() }} >
-                      Login
-                    </Button>
-                    <Button
-                        variant="outlined" color="primary" style={{ textTransform: "none" }}
-                        onClick={() => { alert('clicked') }}>
-                      Register
-                    </Button>
-                </Grid>
-            </form>
-            </div>
+            )
         );
 
 }

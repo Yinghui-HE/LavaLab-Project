@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory, render_template, redirect, url_for
 from flask_restful import Api, Resource, reqparse
 from venv.api.HelloApiHandler import HelloApiHandler
 from venv.api.LoginApiHandler import LoginApiHandler
+from venv.api.ProfileApiHandler import ProfileApiHandler
 from flask_cors import CORS #comment this on deployment
 import mysql.connector
 import os
@@ -27,6 +28,12 @@ def serve(path):
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 api.add_resource(LoginApiHandler, '/login_form')
+api.add_resource(ProfileApiHandler, '/profile')
+
+@app.route("/profile")
+def profile():
+    userID = request.args.get('userID')
+    print(userID)
 
 if __name__ == '__main__':
     app.run(debug=True)

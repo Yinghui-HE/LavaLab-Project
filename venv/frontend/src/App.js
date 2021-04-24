@@ -61,29 +61,42 @@
 //import { Router, Route, Switch, Redirect } from 'react-router-dom';
 ////import { connect } from 'react-redux';
 //
-//import { HomePage } from './Home';
-//import { LoginPage } from './Login';
-//
-//function App() {
-//
-//    render() {
-//        const { alert } = this.props;
-//        return (
-//            <div className="jumbotron">
-//                <div className="container">
-//                    <div className="col-sm-8 col-sm-offset-2">
-//                        <Router>
-//                            <Switch>
-//                                <Route path="/login" component={Login} />
-//                                <Route path="/register" component={Register} />
-//                                <Redirect from="*" to="/" />
-//                            </Switch>
-//                        </Router>
-//                    </div>
-//                </div>
-//            </div>
-//        );
+
+import Login from './Login';
+import Register from './Register';
+import Profile from './Profile'
+import { Redirect, Switch, Route } from 'react-router-dom';
+
+function App() {
+
+//    let element = useRoutes([
+//    // A route object has the same properties as a <Route>
+//    // element. The `children` is just an array of child routes.
+//    { path: '/', element: <Home /> },
+//    {
+//      path: 'users',
+//      element: <Users />,
+//      children: [
+//        { path: '/', element: <UsersIndex /> },
+//        { path: ':id', element: <UserProfile /> },
+//        { path: 'me', element: <OwnUserProfile /> },
+//      ]
 //    }
-//}
+//  ]);
 //
-//export default App;
+//  return element;
+        return (
+
+                    <Switch>
+                        <Route path="/" component={Login} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
+                        <Route path="/profile" component={Profile} />
+                        <Redirect from="*" to="/" />
+                    </Switch>
+
+        );
+
+}
+
+export default App;

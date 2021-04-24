@@ -5,14 +5,13 @@ USE AlDenteDB;
 CREATE TABLE UserProfile (
 	UserID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     Email VARCHAR(30) NOT NULL, 
+    Name VARCHAR(30) NOT NULL, 
     Password VARCHAR(30) NOT NULL, 
     PicURL VARCHAR(1000) NOT NULL,
-    Location VARCHAR(30),
-    RestaurantListID VARCHAR(255)
+    Location VARCHAR(30)
 ); 
 
 CREATE TABLE Followers (
-	Followship INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL, 
     FollowerID INT NOT NULL, 
 	FOREIGN KEY fk1 (UserID) REFERENCES UserProfile(UserID),
@@ -29,7 +28,7 @@ CREATE TABLE Restaurant (
 );
 
 CREATE TABLE UserRestaurantList (
-	UserID INT PRIMARY KEY,
+	UserID INT,
 	RestaurantID INT,
     FOREIGN KEY fk1 (UserID) REFERENCES UserProfile(UserID),
     FOREIGN KEY fk2 (RestaurantID) REFERENCES Restaurant(RestaurantID)
