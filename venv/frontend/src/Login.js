@@ -41,9 +41,9 @@
 import React, { useState } from 'react';
 import { withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import { Face, Fingerprint } from '@material-ui/icons'
-import axios from 'axios'
+import axios from 'axios';
 import './Login.css';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 import Profile from "./Profile";
 //import { browserHistory } from 'react-router'
 
@@ -66,7 +66,9 @@ function Login(props) {
         // eslint-disable-next-line
         const [userID, setUserID] = useState(0);
         const [redirect, setRedirect] = useState(false);
-//        const navigate = useNavigate();
+//        console.log("redirect: ", redirect)
+//        console.log("props:", props)
+
         function handleSubmit(event) {
             console.log( 'Email:', email, 'Password: ', password);
            // You should see email and password in console.
@@ -106,6 +108,7 @@ function Login(props) {
                 <BrowserRouter>
                     <Route path = '/profile'
                         render = {props => <Profile {...props} data={userID} />} />
+                    <Redirect to='/profile'/>
                 </BrowserRouter>
             ) :
             (
