@@ -28,12 +28,7 @@ def serve(path):
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 api.add_resource(LoginApiHandler, '/login_form')
-api.add_resource(ProfileApiHandler, '/profile')
-
-@app.route("/profile")
-def profile():
-    userID = request.args.get('userID')
-    print(userID)
+api.add_resource(ProfileApiHandler, '/dashboard')
 
 if __name__ == '__main__':
     app.run(debug=True)

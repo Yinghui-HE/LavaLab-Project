@@ -64,7 +64,7 @@
 
 import Login from './Login';
 import Register from './Register';
-import Profile from './Profile'
+import Dashboard from './Dashboard'
 import { Redirect, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -91,7 +91,7 @@ function App() {
                         <Route path="/" component={Login} />
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
-                        <Route path="/profile" component={Profile} />
+                        <Route path="/dashboard" component={Dashboard} />
                         <Redirect from="*" to="/" />
                     </Switch>
 

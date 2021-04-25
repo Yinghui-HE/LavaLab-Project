@@ -68,7 +68,6 @@ class ProfileApiHandler(Resource):
             ret_msg = "Log in successfully"
             for row in restaurant_query_results:
                 restaurant_ids.append(row[1])
-                print(row)
 
         # find detailed info about restaurants with restaurants' ids
         restaurants = []
@@ -76,7 +75,17 @@ class ProfileApiHandler(Resource):
             restaurant_info_sql_query = "SELECT *FROM Restaurant WHERE RestaurantID ='%s'" % restaurant_id
             cursor.execute(restaurant_info_sql_query)
             restaurant_info_query_result = cursor.fetchall()[0]
-            restaurants.append(restaurant_info_query_result)
+            # restaurants.append(restaurant_info_query_result)
+            restaurant_dict = {
+                "r_id": restaurant_info_query_result[0],
+                "r_name": restaurant_info_query_result[1],
+                "r_longitude": restaurant_info_query_result[2],
+                "r_latitude": restaurant_info_query_result[3],
+                "r_rating": restaurant_info_query_result[4],
+                "r_pic_url": restaurant_info_query_result[5],
+            }
+            restaurants.append(restaurant_dict)
+        print(restaurants)
 
         final_ret = {"status": ret_status, "message": ret_msg, "restaurants": restaurants, "name": name, "email": email,
                      "pic_url": pic_url, "location": location}

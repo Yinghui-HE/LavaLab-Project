@@ -44,7 +44,7 @@ import { Face, Fingerprint } from '@material-ui/icons'
 import axios from 'axios';
 import './Login.css';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
-import Profile from "./Profile";
+import Dashboard from "./Dashboard";
 //import { browserHistory } from 'react-router'
 
 
@@ -106,9 +106,9 @@ function Login(props) {
             redirect ?
             (
                 <BrowserRouter>
-                    <Route path = '/profile'
-                        render = {props => <Profile {...props} data={userID} />} />
-                    <Redirect to='/profile'/>
+                    <Route path = '/dashboard'
+                        render = {props => <Dashboard {...props} data={userID} />} />
+                    <Redirect to='/dashboard'/>
                 </BrowserRouter>
             ) :
             (
