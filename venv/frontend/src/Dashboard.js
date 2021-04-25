@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+//import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 //import Store from "@material-ui/icons/Store";
 //import Warning from "@material-ui/icons/Warning";
@@ -38,7 +38,6 @@ function Dashboard(props) {
     const userID = props.data;
     const classes = useStyles();
     const [restaurants, setRestaurants] = useState([]);
-//    const [user, setUser] = useState([]);
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -63,11 +62,7 @@ function Dashboard(props) {
                 console.log(response);
                 if (response.data.status === "Success") {
                     console.log(response.data.restaurants);
-//                    setData(response.data.restaurants);
                     setRestaurants(response.data.restaurants);
-//                    console.log(restaurants[5])
-//                    console.log("data", data)
-//                    console.log("props: ", props)
                 }
             })
             .catch(error => console.error('timeout exceeded'))
@@ -85,7 +80,7 @@ function Dashboard(props) {
                   <Card>
                     <CardHeader color="warning" stats icon>
                       <CardIcon color="warning">
-                        <Icon src="{restaurant.r_pic_url}">{restaurant.r_name}</Icon>
+                        <img alt={restaurant.name} src={restaurant.r_pic_url} />
                       </CardIcon>
                     </CardHeader>
                   <CardBody>
