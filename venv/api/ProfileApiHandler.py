@@ -54,7 +54,6 @@ class ProfileApiHandler(Resource):
                 name = row[2]
                 pic_url = row[4]
                 location = row[5]
-                restaurant_list_id = row[6]
                 print(row)
 
         # find restaurants' ids with userID
@@ -67,7 +66,7 @@ class ProfileApiHandler(Resource):
         else:
             ret_status = "Success"
             ret_msg = "Log in successfully"
-            for row in query_results:
+            for row in restaurant_query_results:
                 restaurant_ids.append(row[1])
                 print(row)
 
