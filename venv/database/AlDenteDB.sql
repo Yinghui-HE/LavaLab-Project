@@ -24,12 +24,14 @@ CREATE TABLE Restaurant (
     rLongitude FLOAT NOT NULL, 
     rLatitude FLOAT NOT NULL, 
     rRating FLOAT NOT NULL,
-    rPicURL VARCHAR(1000) NOT NULL
+    rPicURL VARCHAR(1000) NOT NULL,
+    rAddress VARCHAR(1000) NOT NULL
 );
 
 CREATE TABLE UserRestaurantList (
 	UserID INT,
 	RestaurantID INT,
+    IsFavorite INT, 
     FOREIGN KEY fk1 (UserID) REFERENCES UserProfile(UserID),
     FOREIGN KEY fk2 (RestaurantID) REFERENCES Restaurant(RestaurantID)
 );

@@ -10,11 +10,15 @@ import { makeStyles } from "@material-ui/core/styles";
 //import LocalOffer from "@material-ui/icons/LocalOffer";
 //import Update from "@material-ui/icons/Update";
 //import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
+import LocationOn from "@material-ui/icons/LocationOn";
 //import Accessibility from "@material-ui/icons/Accessibility";
 //import BugReport from "@material-ui/icons/BugReport";
 //import Code from "@material-ui/icons/Code";
 //import Cloud from "@material-ui/icons/Cloud";
+import Rating from '@material-ui/lab/Rating';
+//import CardMedia from '@material-ui/core/CardMedia';
+
+
 // core components
 //import Table from "components/Table/Table.js";
 //import Tasks from "components/Tasks/Tasks.js";
@@ -29,6 +33,7 @@ import GridItem from "./Components/Grid/GridItem.js";
 import GridContainer from "./Components/Grid/GridContainer.js";
 
 import styles from "./Style/DashboardStyle.js";
+import LeftDrawer from "./Components/SideDrawer/LeftDrawer.js"
 
 const useStyles = makeStyles(styles);
 
@@ -38,6 +43,7 @@ function Dashboard(props) {
     const userID = props.data;
     const classes = useStyles();
     const [restaurants, setRestaurants] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -61,8 +67,10 @@ function Dashboard(props) {
             .then(response => {
                 console.log(response);
                 if (response.data.status === "Success") {
-                    console.log(response.data.restaurants);
+                    console.log("restaurants: ", response.data.restaurants);
                     setRestaurants(response.data.restaurants);
+                    console.log("user_info:", response.data.user_info);
+                    setUserInfo(response.data.user_info);
                 }
             })
             .catch(error => console.error('timeout exceeded'))
@@ -73,29 +81,38 @@ function Dashboard(props) {
 
 
     return (
-        <div>
-          <GridContainer>
-            {restaurants.map(restaurant => (
-                <GridItem xs={12} sm={12} md={4}>
-                  <Card>
-                    <CardHeader color="warning" stats icon>
-                      <CardIcon color="warning">
-                        <img alt={restaurant.name} src={restaurant.r_pic_url} />
-                      </CardIcon>
-                    </CardHeader>
-                  <CardBody>
-                      <h4 className={classes.cardTitle}>Completed Tasks</h4>
-                      <p className={classes.cardCategory}>Last Campaign Performance</p>
-                    </CardBody>
-                    <CardFooter chart>
-                      <div className={classes.stats}>
-                        <AccessTime /> campaign sent 2 days ago
-                      </div>
-                    </CardFooter>
-                  </Card>
-                </GridItem>
-            ))}
-          </GridContainer>
+        <div id="left_drawer">
+            <LeftDrawer userInfo={userInfo}/>
+            <div id="restaurant_list">
+                <h1>My Restaurant List</h1>
+                <div id="restaurants">
+                  <GridContainer>
+                    {restaurants.map(restaurant => (
+                        <GridItem xs={12} sm={12} md={4} key={restaurant.r_id}>
+                          <Card>
+                            <CardHeader color="warning" stats icon>
+                              <CardIcon color="warning">
+                                <img src={restaurant.r_pic_url} alt={restaurant.r_name} width='200px' height='200px' />
+                              </CardIcon>
+                            </CardHeader>
+                          <CardBody>
+                              <h4 className={classes.cardTitle}>{restaurant.r_name}, Ratings: {restaurant.r_rating}</h4>
+                              <Rating
+                                  name="restaurant_rating"
+                                  value={restaurant.r_rating}
+                                />
+                            </CardBody>
+                            <CardFooter chart>
+                              <div className={classes.stats}>
+                                <LocationOn /> {restaurant.r_longitude}, {restaurant.r_latitude}
+                              </div>
+                            </CardFooter>
+                          </Card>
+                        </GridItem>
+                    ))}
+                  </GridContainer>
+                </div>
+            </div>
         </div>
     );
 };

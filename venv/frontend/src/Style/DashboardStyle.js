@@ -5,7 +5,7 @@ import {
   hexToRgb
 } from "./material-dashboard-react.js";
 
-const profileStyle = {
+const dashboardStyle = {
   successText: {
     color: successColor[0]
   },
@@ -76,7 +76,7 @@ const profileStyle = {
       fontWeight: "400",
       lineHeight: "1"
     }
-  }
+  },
 };
 
-export default profileStyle;
+export default dashboardStyle;

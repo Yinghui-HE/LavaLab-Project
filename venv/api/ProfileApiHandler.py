@@ -26,7 +26,6 @@ class ProfileApiHandler(Resource):
 
         ret_status = "Failure"
         ret_msg = ""
-        user_info = []
 
         # connect to mysql database
         host = os.environ.get('MYSQL_HOST')
@@ -55,6 +54,13 @@ class ProfileApiHandler(Resource):
                 pic_url = row[4]
                 location = row[5]
                 print(row)
+                user_info = {
+                    "user_id": user_id,
+                    "email": email,
+                    "name": name,
+                    "pic_url": pic_url,
+                    "location": location
+                }
 
         # find restaurants' ids with userID
         restaurant_sql_query = "SELECT *FROM UserRestaurantList WHERE UserID ='%s'" % request_userID
@@ -87,7 +93,6 @@ class ProfileApiHandler(Resource):
             restaurants.append(restaurant_dict)
         print(restaurants)
 
-        final_ret = {"status": ret_status, "message": ret_msg, "restaurants": restaurants, "name": name, "email": email,
-                     "pic_url": pic_url, "location": location}
+        final_ret = {"status": ret_status, "message": ret_msg, "restaurants": restaurants, "user_info": user_info, "location": location}
 
         return final_ret
