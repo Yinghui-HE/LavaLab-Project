@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 //import InputLabel from "@material-ui/core/InputLabel";
@@ -14,6 +14,7 @@ import CardBody from "./Components/Card/CardBody.js";
 //import CardFooter from "./Components/Card/CardFooter.js";
 
 import LeftDrawer from "./Components/SideDrawer/LeftDrawer.js"
+import LocationOn from "@material-ui/icons/LocationOn";
 
 const styles = {
   cardCategoryWhite: {
@@ -40,30 +41,41 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function UserProfile(props) {
+function UserProfile(props) {
   const classes = useStyles();
-  console.log("userprofile props: ", props)
+  console.log("userprofile props: ", props);
+  const [userInfo, setUserInfo] = useState({});
 
+  useEffect(() => {
+    setUserInfo(props.data)
+  }, [props.data]);
+
+  function refreshPage(){
+    window.location.reload();
+}
   return (
+
     <div id="left_drawer">
-      <LeftDrawer />
+      <LeftDrawer userInfo={userInfo} />
       <div className={classes.profileGrid}>
+
+
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card profile>
             <CardAvatar profile>
               <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src="https://media-exp1.licdn.com/dms/image/C5603AQFeTsbkfHJ52w/profile-displayphoto-shrink_800_800/0/1562689531347?e=1625097600&v=beta&t=rX0JQBqcXNTtuDSDPVoNbTs1Br6U52kJS-0k5-fAyis" alt="..." />
+                <img src={userInfo.pic_url} alt="..." />
               </a>
             </CardAvatar>
             <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
+              <h2 className={classes.cardTitle}>{userInfo.name}</h2>
+              <h4 className={classes.cardCategory}>{} Followers</h4>
+              <h4 className={classes.cardCategory}>{} Following</h4>
               <p className={classes.description}>
-                Don{"'"}t be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
+                <LocationOn />{userInfo.location}
               </p>
+              <button type="button" onClick={ refreshPage }> <span>Reload</span> </button>
               <Button color="primary" round>
                 Follow
               </Button>
@@ -75,3 +87,5 @@ export default function UserProfile(props) {
     </div>
   );
 }
+
+export default UserProfile;

@@ -43,7 +43,7 @@ import { withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from 
 import { Face, Fingerprint } from '@material-ui/icons'
 import axios from 'axios';
 import './Login.css';
-import { Route, BrowserRouter, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter, Redirect, Switch } from 'react-router-dom';
 import Dashboard from "./Dashboard";
 //import { browserHistory } from 'react-router'
 
@@ -105,11 +105,12 @@ function Login(props) {
         return (
             redirect ?
             (
+                <Switch>
                 <BrowserRouter>
                     <Route path = '/dashboard'
-                        render = {props => <Dashboard {...props} data={userID} />} />
+                        render = {props => <Dashboard {...props} data={{"user_id": userID}} />} />
                     <Redirect to='/dashboard'/>
-                </BrowserRouter>
+                </BrowserRouter></Switch>
             ) :
             (
                 <div className="login-wrapper">

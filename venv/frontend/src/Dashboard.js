@@ -39,11 +39,13 @@ const useStyles = makeStyles(styles);
 
 
 function Dashboard(props) {
-    console.log("userIDDDD:", props.data)
-    const userID = props.data;
+    console.log("userIDDDD:", props.data.user_id)
+    const userID = props.data.user_id;
     const classes = useStyles();
     const [restaurants, setRestaurants] = useState([]);
     const [userInfo, setUserInfo] = useState({});
+    console.log("dashboard props:", props);
+
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -82,9 +84,7 @@ function Dashboard(props) {
 
     return (
         <div id="left_drawer">
-            <LeftDrawer userInfo={userInfo}/>
-            <div id="restaurant_list">
-                <h1>My Restaurant List</h1>
+            <LeftDrawer userInfo={userInfo} />
                 <div id="restaurants">
                   <GridContainer>
                     {restaurants.map(restaurant => (
@@ -111,7 +111,6 @@ function Dashboard(props) {
                         </GridItem>
                     ))}
                   </GridContainer>
-                </div>
             </div>
         </div>
     );

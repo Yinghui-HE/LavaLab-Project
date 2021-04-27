@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 //import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-//import Dashboard from "../../Dashboard.js"
+import Dashboard from "../../Dashboard.js"
 import UserProfile from "../../UserProfile.js"
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
@@ -43,26 +43,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LeftDrawer(props) {
   const classes = useStyles();
-  console.log("drawer class: ", props);
   const [profileRedirect, setProfileRedirect] = useState(false);
-  const userInfo = useState(props.userInfo);
-//  const [nextAddress, setNextAddress] = useState("");
+  const [dashboardRedirect, setDashboardRedirect] = useState(false);
+
+  const [userInfo, setUserInfo] = useState({});
+  const [nextAddress, setNextAddress] = useState("");
+  console.log("drawer props:", props);
 
 
-  function handleProfileOnclick(address) {
-    console.log("address:", address);
-    console.log("props:", props);
-    console.log("userInfo:", userInfo);
-//    setNextAddress('/' + address.toLowerCase());
-    setProfileRedirect(true);
-//    return (
-//        <BrowserRouter>
-//            <Route path = '/profile'
-//                render = {props => <UserProfile {...props} data={props} />} />
-//            <Redirect to='/profile'/>
-//        </BrowserRouter>
-//    );
-//    return <Redirect to = {{ pathname: '/profile', data: {props} }} />
+  useEffect(() => {
+    setUserInfo(props.userInfo);
+  }, [props.userInfo]);
+
+  function handleDrawerOnclick(address) {
+    setNextAddress(address.text);
+    console.log("next address:", nextAddress);
+
+    if (nextAddress === "Profile") {
+        setProfileRedirect(true);
+        console.log("equal profile");
+    } else if (nextAddress === "Dashboard") {
+        setDashboardRedirect(true);
+        console.log("equal dashboard");
+    }
+    console.log("no equal");
   }
 
 
@@ -71,11 +75,20 @@ export default function LeftDrawer(props) {
     (
         <BrowserRouter>
             <Route path = '/profile'
-                render = {userInfo => <UserProfile {...userInfo} data={userInfo} />} />
+                render = {props => <UserProfile {...props} data={userInfo} />} />
             <Redirect to='/profile'/>
         </BrowserRouter>
     ) :
-    (<div className={classes.root}>
+    dashboardRedirect ?
+    (
+        <BrowserRouter>
+            <Route path = '/dashboard'
+                render = {props => <Dashboard {...props} data={userInfo} />} />
+            <Redirect to='/dashboard'/>
+        </BrowserRouter>
+    ) :
+    (
+    <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -96,7 +109,7 @@ export default function LeftDrawer(props) {
         <Divider />
         <List>
           {['Dashboard', 'Profile', 'Maps'].map((text, index) => (
-            <ListItem button key={text} onClick={ () => handleProfileOnclick({text})}>
+            <ListItem button key={text} onClick={ () => handleDrawerOnclick({text})}>
               <ListItemText primary={text} />
             </ListItem>
           ))}
