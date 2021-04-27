@@ -34,6 +34,7 @@ import GridContainer from "./Components/Grid/GridContainer.js";
 
 import styles from "./Style/DashboardStyle.js";
 import LeftDrawer from "./Components/SideDrawer/LeftDrawer.js"
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -42,6 +43,9 @@ function Dashboard(props) {
     console.log("userIDDDD:", props.data.user_id)
     const userID = props.data.user_id;
     const classes = useStyles();
+    let history = useHistory();
+    console.log("history:", history);
+    const curr_location = history.location.pathname;
     const [restaurants, setRestaurants] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     console.log("dashboard props:", props);
@@ -84,7 +88,7 @@ function Dashboard(props) {
 
     return (
         <div id="left_drawer">
-            <LeftDrawer userInfo={userInfo} />
+            <LeftDrawer userInfo={userInfo} currLocation={curr_location} />
                 <div id="restaurants">
                   <GridContainer>
                     {restaurants.map(restaurant => (

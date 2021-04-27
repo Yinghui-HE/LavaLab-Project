@@ -34,7 +34,7 @@ const styles = {
     textDecoration: "none"
   },
   profileGrid: {
-    margin: "100px 0px 0px 150px",
+    margin: "100px 0px 400px 150px",
     width: "unset"
   }
 };
@@ -45,14 +45,31 @@ function UserProfile(props) {
   const classes = useStyles();
   console.log("userprofile props: ", props);
   const [userInfo, setUserInfo] = useState({});
+  const [prevLocation, setPrevLocation] = useState("");
+  const [currLocation, setCurrLocation] = useState("");
+  const [locationChange, setLocationChange] = useState(false);
 
+  console.log("userprofile previous loc: ", props.history.location.state.from);
+  console.log("userprofile current loc: ", props.history.location.pathname);
+
+//  //create your forceUpdate hook
+//    function useForceUpdate(){
+//        const [value, setValue] = useState(0); // integer state
+//        return () => setValue(value => value + 1); // update the state to force render
+//    }
   useEffect(() => {
     setUserInfo(props.data)
-  }, [props.data]);
+    setPrevLocation(props.history.location.state.from);
+    setCurrLocation(props.history.location.pathname);
+    setLocationChange(prevLocation !== currLocation);
+    console.log("location change: ", locationChange)
+  }, [props.data, props.history.location.state.from, props.history.location.pathname, locationChange, currLocation, prevLocation]);
 
-  function refreshPage(){
-    window.location.reload();
-}
+
+//  if(prevLocation !== currLocation) {
+//        useForceUpdate();
+//    }
+
   return (
 
     <div id="left_drawer">
@@ -70,12 +87,11 @@ function UserProfile(props) {
             </CardAvatar>
             <CardBody profile>
               <h2 className={classes.cardTitle}>{userInfo.name}</h2>
-              <h4 className={classes.cardCategory}>{} Followers</h4>
-              <h4 className={classes.cardCategory}>{} Following</h4>
+              <h4 className={classes.cardCategory}>0 Followers</h4>
+              <h4 className={classes.cardCategory}>0 Following</h4>
               <p className={classes.description}>
                 <LocationOn />{userInfo.location}
               </p>
-              <button type="button" onClick={ refreshPage }> <span>Reload</span> </button>
               <Button color="primary" round>
                 Follow
               </Button>

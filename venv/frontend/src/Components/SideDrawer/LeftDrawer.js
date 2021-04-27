@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Dashboard from "../../Dashboard.js"
 import UserProfile from "../../UserProfile.js"
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -47,21 +48,34 @@ export default function LeftDrawer(props) {
   const [dashboardRedirect, setDashboardRedirect] = useState(false);
 
   const [userInfo, setUserInfo] = useState({});
+  const [currLocation, setCurrLocation] = useState("");
+
   const [nextAddress, setNextAddress] = useState("");
   console.log("drawer props:", props);
 
+  let history = useHistory();
+  console.log("history:", history);
 
   useEffect(() => {
     setUserInfo(props.userInfo);
-  }, [props.userInfo]);
+    setCurrLocation(props.currLocation);
+  }, [props.userInfo, props.currLocation]);
 
   function handleDrawerOnclick(address) {
     setNextAddress(address.text);
     console.log("next address:", nextAddress);
+    console.log("drawer props:", props);
 
     if (nextAddress === "Profile") {
         setProfileRedirect(true);
         console.log("equal profile");
+//        history.push({
+//            pathname: '/profile',
+//            state: {
+//                from: currLocation,
+//                userInfo: userInfo
+//            }
+//        });
     } else if (nextAddress === "Dashboard") {
         setDashboardRedirect(true);
         console.log("equal dashboard");
@@ -76,7 +90,7 @@ export default function LeftDrawer(props) {
         <BrowserRouter>
             <Route path = '/profile'
                 render = {props => <UserProfile {...props} data={userInfo} />} />
-            <Redirect to='/profile'/>
+            <Redirect to={{ pathname: '/profile', state: {from: currLocation}}}/>
         </BrowserRouter>
     ) :
     dashboardRedirect ?
@@ -84,7 +98,7 @@ export default function LeftDrawer(props) {
         <BrowserRouter>
             <Route path = '/dashboard'
                 render = {props => <Dashboard {...props} data={userInfo} />} />
-            <Redirect to='/dashboard'/>
+            <Redirect to={{ pathname: '/dashboard', state: {from: currLocation}}} />
         </BrowserRouter>
     ) :
     (

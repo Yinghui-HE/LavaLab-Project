@@ -98,6 +98,9 @@ function Login(props) {
                     setRedirect(true);
 //                    navigate("/profile")
                 }
+                else {
+                    alert(response.data.message);
+                }
             })
             .catch(error => console.error('timeout exceeded'))
         }
