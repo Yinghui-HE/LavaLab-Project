@@ -48,7 +48,7 @@ function Followers(props) {
     let history = useHistory();
     console.log("history:", history);
     const curr_location = history.location.pathname;
-//    const [restaurants, setRestaurants] = useState([]);
+    const [userRestaurants, setUserRestaurants] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     const [followers, setFollowers] = useState([]);
 
@@ -78,8 +78,8 @@ function Followers(props) {
             .then(response => {
                 console.log(response);
                 if (response.data.status === "Success") {
-//                    console.log("restaurants: ", response.data.restaurants);
-//                    setRestaurants(response.data.restaurants);
+                    console.log("restaurants: ", response.data.restaurants);
+                    setUserRestaurants(response.data.restaurants);
                     console.log("user_info:", response.data.user_info);
                     setUserInfo(response.data.user_info);
                     console.log("followers", response.data.followers)
@@ -89,7 +89,7 @@ function Followers(props) {
                 }
             })
             .catch(error => console.error('timeout exceeded'))
-    }
+        }
 
     }, [userID, props]);
 
@@ -109,7 +109,7 @@ function Followers(props) {
 //                    </Switch>
                 <BrowserRouter>
                     <Route path = '/follower'
-                        render = {props => <Follower {...props} data={{followerInfo, userInfo}} />} />
+                        render = {props => <Follower {...props} data={{followerInfo, userInfo, userRestaurants}} />} />
                     <Redirect to={{ pathname: '/follower'}}/>
                 </BrowserRouter>
             );

@@ -93,7 +93,7 @@ function UserProfile(props) {
                 <LocationOn />{userInfo.location}
               </p>
               <Button color="primary" round>
-                Follow
+                {userInfo.email}
               </Button>
             </CardBody>
           </Card>

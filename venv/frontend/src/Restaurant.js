@@ -15,6 +15,7 @@ import CardBody from "./Components/Card/CardBody.js";
 
 import LeftDrawer from "./Components/SideDrawer/LeftDrawer.js"
 import LocationOn from "@material-ui/icons/LocationOn";
+import axios from 'axios';
 
 const styles = {
   cardCategoryWhite: {
@@ -46,6 +47,8 @@ function Restaurant(props) {
   console.log("restaurant props: ", props);
   const [restaurantInfo, setRestaurantInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
+  const [userRestaurants, setUserRestaurants] = useState([]);
+  const [followingButtonText, setFollowingButtonText] = useState('Add to my restaurant list');
 //  const [prevLocation, setPrevLocation] = useState("");
 //  const [currLocation, setCurrLocation] = useState("");
 //  const [locationChange, setLocationChange] = useState(false);
@@ -61,7 +64,44 @@ function Restaurant(props) {
   useEffect(() => {
     setRestaurantInfo(props.data.restaurantInfo);
     setUserInfo(props.data.userInfo);
-  }, [props.data]);
+    setUserRestaurants(props.data.userRestaurants);
+    checkFollowingStatus();
+
+    function checkFollowingStatus () {
+    var i;
+    console.log("check following status: ", restaurantInfo, userRestaurants);
+    for (i=0; i<userRestaurants.length; i++) {
+        if (userRestaurants[i].r_id === restaurantInfo.r_id) {
+            setFollowingButtonText('Following');
+            console.log("in the list with r_id: ", restaurantInfo.r_id);
+            break;
+        }
+    }
+  }
+
+  }, [props.data, restaurantInfo, userRestaurants]);
+
+  function addToMyList() {
+    axios({
+      url: '/restaurant',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+      data: {
+        userID: userInfo.user_id,
+        restaurantID: restaurantInfo.r_id
+      }
+    })
+    .then(response => {
+        console.log(response);
+        if (response.data.status === "Success") {
+            alert("successfully add ", restaurantInfo.r_name, "to my restaurant list");
+        }
+    })
+    .catch(error => console.error('timeout exceeded'))
+  }
 //
 
 //  if(prevLocation !== currLocation) {
@@ -89,8 +129,8 @@ function Restaurant(props) {
               <p className={classes.description}>
                 <LocationOn />{restaurantInfo.r_address}
               </p>
-              <Button color="primary" round>
-                Following
+              <Button color="primary" round onClick={() => { addToMyList(); }}>
+                {followingButtonText}
               </Button>
             </CardBody>
           </Card>

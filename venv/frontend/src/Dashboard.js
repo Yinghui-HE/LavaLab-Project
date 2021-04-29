@@ -49,7 +49,7 @@ function Dashboard(props) {
     let history = useHistory();
     console.log("history:", history);
     const curr_location = history.location.pathname;
-    const [restaurants, setRestaurants] = useState([]);
+    const [userRestaurants, setUserRestaurants] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     const [followers, setFollowers] = useState({});
     const [restaurantRedirect, setRestaurantRedirect] = useState(false);
@@ -82,7 +82,7 @@ function Dashboard(props) {
                 console.log(response);
                 if (response.data.status === "Success") {
                     console.log("restaurants: ", response.data.restaurants);
-                    setRestaurants(response.data.restaurants);
+                    setUserRestaurants(response.data.restaurants);
                     console.log("user_info:", response.data.user_info);
                     setUserInfo(response.data.user_info);
                     console.log("followers", response.data.followers)
@@ -107,12 +107,9 @@ function Dashboard(props) {
 //            });
 
             return (
-//            <Switch>
-//                        <Route path="/restaurant" component={Restaurant} />
-//                    </Switch>
                 <BrowserRouter>
                     <Route path = '/restaurant'
-                        render = {props => <Restaurant {...props} data={{restaurantInfo, userInfo}} />} />
+                        render = {props => <Restaurant {...props} data={{restaurantInfo, userInfo, userRestaurants}} />} />
                     <Redirect to={{ pathname: '/restaurant'}}/>
                 </BrowserRouter>
             );
@@ -124,7 +121,7 @@ function Dashboard(props) {
             <LeftDrawer userInfo={userInfo} currLocation={curr_location} />
                 <div id="restaurants">
                   <GridContainer>
-                    {restaurants.map(restaurant => (
+                    {userRestaurants.map(restaurant => (
                         <GridItem xs={12} sm={12} md={4} key={restaurant.r_id}>
                           <Card>
                             <CardHeader color="warning" stats icon>

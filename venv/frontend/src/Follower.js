@@ -68,10 +68,12 @@ function Follower(props) {
 
   const [restaurantRedirect, setRestaurantRedirect] = useState(false);
   const [restaurantInfo, setRestaurantInfo] = useState(-1);
+  const [userRestaurants, setUserRestaurants] = useState([]);
 
   useEffect(() => {
     setFollowerInfo(props.data.followerInfo);
     setUserInfo(props.data.userInfo);
+    setUserRestaurants(props.data.userRestaurants);
     getFollowerRestaurants();
 
     function getFollowerRestaurants() {
@@ -111,7 +113,7 @@ function Follower(props) {
     return (
         <BrowserRouter>
             <Route path = '/restaurant'
-                render = {props => <Restaurant {...props} data={{restaurantInfo, userInfo}} />} />
+                render = {props => <Restaurant {...props} data={{restaurantInfo, userInfo, userRestaurants}} />} />
             <Redirect to={{ pathname: '/restaurant'}}/>
         </BrowserRouter>
     );
