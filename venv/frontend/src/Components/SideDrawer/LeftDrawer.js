@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Dashboard from "../../Dashboard.js"
 import UserProfile from "../../UserProfile.js"
+import Followers from "../../Followers.js"
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 
@@ -46,6 +47,7 @@ export default function LeftDrawer(props) {
   const classes = useStyles();
   const [profileRedirect, setProfileRedirect] = useState(false);
   const [dashboardRedirect, setDashboardRedirect] = useState(false);
+  const [followersRedirect, setFollowersRedirect] = useState(false);
 
   const [userInfo, setUserInfo] = useState({});
   const [currLocation, setCurrLocation] = useState("");
@@ -79,6 +81,9 @@ export default function LeftDrawer(props) {
     } else if (nextAddress === "Dashboard") {
         setDashboardRedirect(true);
         console.log("equal dashboard");
+    } else if (nextAddress === "Followers") {
+        setFollowersRedirect(true);
+        console.log("equal followers");
     }
     console.log("no equal");
   }
@@ -99,6 +104,14 @@ export default function LeftDrawer(props) {
             <Route path = '/dashboard'
                 render = {props => <Dashboard {...props} data={userInfo} />} />
             <Redirect to={{ pathname: '/dashboard', state: {from: currLocation}}} />
+        </BrowserRouter>
+    ) :
+    followersRedirect ?
+    (
+        <BrowserRouter>
+            <Route path = '/followers'
+                render = {props => <Followers {...props} data={userInfo} />} />
+            <Redirect to={{ pathname: '/followers', state: {from: currLocation}}} />
         </BrowserRouter>
     ) :
     (
@@ -122,7 +135,7 @@ export default function LeftDrawer(props) {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['Dashboard', 'Profile', 'Maps'].map((text, index) => (
+          {['Dashboard', 'Profile', 'Followers', 'Maps'].map((text, index) => (
             <ListItem button key={text} onClick={ () => handleDrawerOnclick({text})}>
               <ListItemText primary={text} />
             </ListItem>

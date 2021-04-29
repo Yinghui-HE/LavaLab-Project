@@ -96,6 +96,38 @@ class ProfileApiHandler(Resource):
             restaurants.append(restaurant_dict)
         print(restaurants)
 
-        final_ret = {"status": ret_status, "message": ret_msg, "restaurants": restaurants, "user_info": user_info, "location": location}
+        # find followers' ids with userID
+        follower_sql_query = "SELECT *FROM Followers WHERE UserID ='%s'" % request_userID
+        cursor.execute(follower_sql_query)
+        follower_query_results = cursor.fetchall()
+        follower_ids = []
+        if len(follower_query_results) == 0:
+            ret_msg = "No follower under userID: " + request_userID + " has been found"
+        else:
+            ret_status = "Success"
+            ret_msg = "Log in successfully"
+            print(follower_query_results)
+            for row in follower_query_results:
+                follower_ids.append(row[2])
+        print(follower_ids)
+
+        # find detailed info about followers with followers' ids
+        followers = []
+        for follower_id in follower_ids:
+            follower_info_sql_query = "SELECT *FROM UserProfile WHERE UserID ='%s'" % follower_id
+            cursor.execute(follower_info_sql_query)
+            follower_info_sql_query_result = cursor.fetchall()[0]
+            follower_dict = {
+                "follower_id": follower_info_sql_query_result[0],
+                "follower_email": follower_info_sql_query_result[1],
+                "follower_name": follower_info_sql_query_result[2],
+                "follower_pic_url": follower_info_sql_query_result[4],
+                "follower_location": follower_info_sql_query_result[5],
+            }
+            followers.append(follower_dict)
+        print(followers)
+
+        final_ret = {"status": ret_status, "message": ret_msg, "restaurants": restaurants, "user_info": user_info,
+                     "location": location, "followers": followers}
 
         return final_ret
