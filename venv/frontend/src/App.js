@@ -66,6 +66,7 @@ import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
 import UserProfile from './UserProfile';
+import Restaurant from './Restaurant';
 import { Redirect, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
                         <Route path="/register" component={Register} />
                         <Route path="/dashboard" component={Dashboard} />
                         <Route path="/profile" component={UserProfile} />
+                        <Route path="/restaurant" component={Restaurant} />
                         <Route path="/" component={Login} />
                         <Redirect from="*" to="/" />
                     </Switch>

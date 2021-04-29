@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 //import InputLabel from "@material-ui/core/InputLabel";
@@ -41,16 +41,17 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function UserProfile(props) {
+function Restaurant(props) {
   const classes = useStyles();
-  console.log("userprofile props: ", props);
+  console.log("restaurant props: ", props);
+  const [restaurantInfo, setRestaurantInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const [prevLocation, setPrevLocation] = useState("");
-  const [currLocation, setCurrLocation] = useState("");
-  const [locationChange, setLocationChange] = useState(false);
+//  const [prevLocation, setPrevLocation] = useState("");
+//  const [currLocation, setCurrLocation] = useState("");
+//  const [locationChange, setLocationChange] = useState(false);
 
-  console.log("userprofile previous loc: ", props.history.location.state.from);
-  console.log("userprofile current loc: ", props.history.location.pathname);
+//  console.log("restaurant previous loc: ", props.history.location.state.from);
+//  console.log("restaurant current loc: ", props.history.location.pathname);
 
 //  //create your forceUpdate hook
 //    function useForceUpdate(){
@@ -58,13 +59,10 @@ function UserProfile(props) {
 //        return () => setValue(value => value + 1); // update the state to force render
 //    }
   useEffect(() => {
-    setUserInfo(props.data)
-    setPrevLocation(props.history.location.state.from);
-    setCurrLocation(props.history.location.pathname);
-    setLocationChange(prevLocation !== currLocation);
-    console.log("location change: ", locationChange)
-  }, [props.data, props.history.location.state.from, props.history.location.pathname, locationChange, currLocation, prevLocation]);
-
+    setRestaurantInfo(props.data.restaurantInfo);
+    setUserInfo(props.data.userInfo);
+  }, [props.data]);
+//
 
 //  if(prevLocation !== currLocation) {
 //        useForceUpdate();
@@ -82,18 +80,17 @@ function UserProfile(props) {
           <Card profile>
             <CardAvatar profile>
               <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src={userInfo.pic_url} alt="..." />
+                <img src={restaurantInfo.r_pic_url} alt="..." />
               </a>
             </CardAvatar>
             <CardBody profile>
-              <h2 className={classes.cardTitle}>{userInfo.name}</h2>
-              <h4 className={classes.cardCategory}>2 Followers</h4>
-              <h4 className={classes.cardCategory}>1 Following</h4>
+              <h2 className={classes.cardTitle}>{restaurantInfo.r_name}</h2>
+              <h4 className={classes.cardCategory}>46 Followers</h4>
               <p className={classes.description}>
-                <LocationOn />{userInfo.location}
+                <LocationOn />{restaurantInfo.r_address}
               </p>
               <Button color="primary" round>
-                Follow
+                Following
               </Button>
             </CardBody>
           </Card>
@@ -104,4 +101,4 @@ function UserProfile(props) {
   );
 }
 
-export default UserProfile;
+export default Restaurant;

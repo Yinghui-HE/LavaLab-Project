@@ -35,6 +35,9 @@ import GridContainer from "./Components/Grid/GridContainer.js";
 import styles from "./Style/DashboardStyle.js";
 import LeftDrawer from "./Components/SideDrawer/LeftDrawer.js"
 import { useHistory } from "react-router-dom";
+import Restaurant from "./Restaurant.js"
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
+
 
 const useStyles = makeStyles(styles);
 
@@ -49,6 +52,9 @@ function Dashboard(props) {
     const [restaurants, setRestaurants] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     console.log("dashboard props:", props);
+    const [restaurantRedirect, setRestaurantRedirect] = useState(false);
+    const [restaurantInfo, setRestaurantInfo] = useState(-1);
+
 
 
     // Similar to componentDidMount and componentDidUpdate:
@@ -57,6 +63,8 @@ function Dashboard(props) {
         if (userID !== -1) {
             getUserInfo();
         }
+
+
 
         function getUserInfo() {
         axios({
@@ -84,9 +92,30 @@ function Dashboard(props) {
 
     }, [userID]);
 
+    if (restaurantRedirect) {
+            console.log("restaurantRedirect: ", restaurantRedirect);
 
+//            history.push({
+//                pathname: "/restaurant",
+//                state: {
+//                    restaurant_id: restaurantRedirect
+//                }
+//            });
+
+            return (
+//            <Switch>
+//                        <Route path="/restaurant" component={Restaurant} />
+//                    </Switch>
+                <BrowserRouter>
+                <Route path = '/restaurant'
+                    render = {props => <Restaurant {...props} data={{restaurantInfo, userInfo}} />} />
+                <Redirect to={{ pathname: '/restaurant'}}/>
+            </BrowserRouter>
+            );
+        }
 
     return (
+
         <div id="left_drawer">
             <LeftDrawer userInfo={userInfo} currLocation={curr_location} />
                 <div id="restaurants">
@@ -100,7 +129,12 @@ function Dashboard(props) {
                               </CardIcon>
                             </CardHeader>
                           <CardBody>
-                              <h4 className={classes.cardTitle}>{restaurant.r_name}, Ratings: {restaurant.r_rating}</h4>
+                              <button className={classes.cardTitle} onClick = {() => {
+                                    setRestaurantRedirect(true);
+                                    setRestaurantInfo(restaurant);
+                              }}>
+                                {restaurant.r_name}, Ratings: {restaurant.r_rating}
+                              </button>
                               <Rating
                                   name="restaurant_rating"
                                   value={restaurant.r_rating}

@@ -1,4 +1,5 @@
-UserID,RestaurantID
-1,1
 1,2
-2,6
+UserRestaurantID,UserID,RestaurantID,IsFavorite
+1,1,1,F
+2,1,2,F
+3,2,3,F

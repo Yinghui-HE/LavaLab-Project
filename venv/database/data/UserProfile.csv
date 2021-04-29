@@ -1,3 +1,4 @@
 UserID,Email,Name,Password,PicURL,Location
-1,heyinghu,"Yinghui He",pass,https://media-exp1.licdn.com/dms/image/C5603AQFeTsbkfHJ52w/profile-displayphoto-shrink_800_800/0/1562689531347?e=1625097600&v=beta&t=rX0JQBqcXNTtuDSDPVoNbTs1Br6U52kJS-0k5-fAyis,"Los Angeles"
-2,linda,"Linda He",linda,pic_linda,"Beijing, China"
+1,lindahe@usc.edu,"Linda He",pass,https://media-exp1.licdn.com/dms/image/C5603AQFeTsbkfHJ52w/profile-displayphoto-shrink_800_800/0/1562689531347?e=1625097600&v=beta&t=rX0JQBqcXNTtuDSDPVoNbTs1Br6U52kJS-0k5-fAyis,"Los Angeles, CA"
+2,karla@gmail.com,"Karla Leung",pass,https://media-exp1.licdn.com/dms/image/C5603AQF0Q5Ir357Lrg/profile-displayphoto-shrink_400_400/0/1604307634184?e=1625097600&v=beta&t=LZCRQG2Qfi-ucvfCT2bDPg58B3CnpmJJPxAN-XwANMs,"Los Angeles, CA"
+3,abe@usc.edu,"Abe Angle",pass,https://media-exp1.licdn.com/dms/image/C4E03AQEENETAziSTfw/profile-displayphoto-shrink_400_400/0/1596755033079?e=1625097600&v=beta&t=qxW8dtNjyJdZpsdBcaih0iNzzv-OtioW1o6G8j2Tvjg,"Los Angeles"

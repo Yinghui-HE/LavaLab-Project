@@ -72,9 +72,11 @@ class ProfileApiHandler(Resource):
         else:
             ret_status = "Success"
             ret_msg = "Log in successfully"
+            print(restaurant_query_results)
             for row in restaurant_query_results:
-                restaurant_ids.append(row[1])
+                restaurant_ids.append(row[2])
 
+        print(restaurant_ids)
         # find detailed info about restaurants with restaurants' ids
         restaurants = []
         for restaurant_id in restaurant_ids:
@@ -89,6 +91,7 @@ class ProfileApiHandler(Resource):
                 "r_latitude": restaurant_info_query_result[3],
                 "r_rating": restaurant_info_query_result[4],
                 "r_pic_url": restaurant_info_query_result[5],
+                "r_address": restaurant_info_query_result[6]
             }
             restaurants.append(restaurant_dict)
         print(restaurants)

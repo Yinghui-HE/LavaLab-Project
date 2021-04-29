@@ -12,6 +12,7 @@ CREATE TABLE UserProfile (
 ); 
 
 CREATE TABLE Followers (
+	FollowshipID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL, 
     FollowerID INT NOT NULL, 
 	FOREIGN KEY fk1 (UserID) REFERENCES UserProfile(UserID),
@@ -29,6 +30,7 @@ CREATE TABLE Restaurant (
 );
 
 CREATE TABLE UserRestaurantList (
+	UserRestaurantID INT PRIMARY KEY AUTO_INCREMENT,
 	UserID INT,
 	RestaurantID INT,
     IsFavorite INT, 
