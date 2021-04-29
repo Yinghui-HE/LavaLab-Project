@@ -81,7 +81,7 @@ export default function LeftDrawer(props) {
     } else if (nextAddress === "Dashboard") {
         setDashboardRedirect(true);
         console.log("equal dashboard");
-    } else if (nextAddress === "Followers") {
+    } else if (nextAddress === "Following") {
         setFollowersRedirect(true);
         console.log("equal followers");
     }
@@ -109,9 +109,9 @@ export default function LeftDrawer(props) {
     followersRedirect ?
     (
         <BrowserRouter>
-            <Route path = '/followers'
+            <Route path = '/following'
                 render = {props => <Followers {...props} data={userInfo} />} />
-            <Redirect to={{ pathname: '/followers', state: {from: currLocation}}} />
+            <Redirect to={{ pathname: '/following', state: {from: currLocation}}} />
         </BrowserRouter>
     ) :
     (
@@ -135,7 +135,7 @@ export default function LeftDrawer(props) {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['Dashboard', 'Profile', 'Followers', 'Maps'].map((text, index) => (
+          {['Dashboard', 'Profile', 'Following', 'Maps'].map((text, index) => (
             <ListItem button key={text} onClick={ () => handleDrawerOnclick({text})}>
               <ListItemText primary={text} />
             </ListItem>

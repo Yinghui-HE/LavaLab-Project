@@ -38,7 +38,6 @@ import { useHistory } from "react-router-dom";
 import Follower from "./Follower.js"
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 
-
 const useStyles = makeStyles(styles);
 
 
